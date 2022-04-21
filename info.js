@@ -3,6 +3,10 @@ var URL="https://ceclnx01.cec.miamioh.edu/~johnsok9/cse383/ajax/index.php/";
 var errorCounter=0;
 var prevTx = 0;
 var prevRx = 0;
+var rootProcCount = 0;
+var loadAvgCount = 0;
+var getTxRxCount = 0;
+
 $( document ).ready(function() {
 	getRootProc();
 	getLoadAvg();
@@ -15,6 +19,8 @@ function getRootProc() {
 		url: URL + 'vi/api/ps',
 		method: "GET"
 	}).done(function(data) {
+		rootProcCount += 1;
+		$("#processRun").html(rootProcCount);
 		len = data.ps.length;
 		$("#processes").html("");
 		for (i=0;i<len;i++) {
@@ -36,6 +42,8 @@ function getLoadAvg() {
 		url: URL + 'vi/api/loadavg',
 		method: "GET"
 	}).done(function(data) {
+		loadAvgCount += 1;
+		$("#loadRun").html(loadAvgCount);
         $("#onemin").html(data.loadavg.OneMinAvg)
         $("#fivemin").html(data.loadavg.FiveMinAvg)
         $("#fifteenmin").html(data.loadavg.FifteenMinAvg)
@@ -57,6 +65,8 @@ function getTxRx() {
 		url: URL + 'vi/api/network',
 		method: "GET"
 	}).done(function(data) {
+		getTxRxCount += 1;
+		$("#networkRun").html(getTxRxCount);
 		var txSec = 0;
 		var rxSec = 0;
 		if (prevTx != 0 && prevRx != 0) {
